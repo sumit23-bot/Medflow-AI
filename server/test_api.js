@@ -1,4 +1,5 @@
 const app = require('./server');
+const { cleanupTestData } = require('./cleanup_test_data');
 
 const PORT = 5099; // Isolated port for testing
 
@@ -278,6 +279,12 @@ async function runTests() {
     });
 
   } finally {
+    console.log('\n🧹 Automatically cleaning up test-generated records...');
+    try {
+      await cleanupTestData();
+    } catch (cleanupErr) {
+      console.warn('Cleanup warning:', cleanupErr.message);
+    }
     server.close();
   }
 

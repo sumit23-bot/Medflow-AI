@@ -1,3 +1,4 @@
+const { createClient } = require('@supabase/supabase-js');
 const { supabase, isConfigured } = require('../supabaseClient');
 
 /**
@@ -28,7 +29,14 @@ const login = async (req, res) => {
       });
     }
 
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+    // Use isolated client so global service role client is not polluted with user session
+    const authClient = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_SECRET_KEY,
+      { auth: { persistSession: false, autoRefreshToken: false } }
+    );
+
+    const { data: authData, error: authError } = await authClient.auth.signInWithPassword({
       email,
       password
     });
