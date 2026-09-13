@@ -1,8 +1,9 @@
 const { supabase, isConfigured } = require('../supabaseClient');
+const { summarizeSymptoms } = require('../services/agentSymptomSummary');
 
 /**
  * POST /api/kiosk/symptom
- * Accepts raw symptom text or voice transcript, returns initial structured summary placeholder
+ * Accepts raw symptom text or voice transcript, returns AI-structured triage summary
  * (Wired to Gemini Agent 1 in Phase 3)
  */
 const submitSymptom = async (req, res) => {
@@ -16,18 +17,12 @@ const submitSymptom = async (req, res) => {
       });
     }
 
-    // Baseline structure (will be enhanced by AI Agent 1 in Phase 3)
-    const mockSummary = {
-      chief_complaint: symptom_raw.slice(0, 50),
-      duration: 'Not specified',
-      severity_keywords: ['reported'],
-      raw_text: symptom_raw,
-      language
-    };
+    // Call Agent 1
+    const summary = await summarizeSymptoms(symptom_raw, language);
 
     return res.status(200).json({
       success: true,
-      data: mockSummary
+      data: summary
     });
   } catch (err) {
     console.error('submitSymptom error:', err);

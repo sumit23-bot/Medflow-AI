@@ -1,4 +1,5 @@
 const { supabase, isConfigured } = require('../supabaseClient');
+const { structurePrescription } = require('../services/agentPrescriptionStructure');
 
 /**
  * GET /api/doctor/queue
@@ -157,11 +158,21 @@ const getPatientDetail = async (req, res) => {
  */
 const submitPrescription = async (req, res) => {
   try {
-    const { visit_id, diagnosis, prescription_raw, prescription_structured_ai } = req.body;
+    const { visit_id, diagnosis, prescription_raw, prescription_structured_ai, language = 'hi' } = req.body;
     const doctorId = req.user?.id || null;
 
     if (!visit_id) {
       return res.status(400).json({ success: false, error: 'visit_id is required' });
+    }
+
+    // Call Agent 2 if prescription_structured_ai not already provided
+    let structuredAi = prescription_structured_ai;
+    if (!structuredAi && (prescription_raw || diagnosis)) {
+      try {
+        structuredAi = await structurePrescription(diagnosis, prescription_raw, language);
+      } catch (aiErr) {
+        console.warn('Agent 2 structuring fallback:', aiErr.message);
+      }
     }
 
     if (!isConfigured) {
@@ -173,7 +184,7 @@ const submitPrescription = async (req, res) => {
           doctor_id: doctorId,
           diagnosis: diagnosis || 'General viral syndrome',
           prescription_raw: prescription_raw || 'Paracetamol 500mg, Cetirizine 10mg',
-          prescription_structured_ai: prescription_structured_ai || null,
+          prescription_structured_ai: structuredAi || null,
           status: 'at-pharmacy',
           updated_at: new Date().toISOString()
         }
@@ -186,7 +197,7 @@ const submitPrescription = async (req, res) => {
       .update({
         diagnosis,
         prescription_raw,
-        prescription_structured_ai: prescription_structured_ai || null,
+        prescription_structured_ai: structuredAi || null,
         doctor_id: doctorId,
         status: 'at-pharmacy'
       })

@@ -1,4 +1,5 @@
 const { supabase, isConfigured } = require('../supabaseClient');
+const { generateFollowUpReminder } = require('../services/agentFollowUp');
 
 /**
  * GET /api/records/search?q=...
@@ -156,7 +157,56 @@ const getPatientFullHistory = async (req, res) => {
   }
 };
 
+/**
+ * POST /api/records/follow-up/:visitId
+ * Generates an automated WhatsApp/SMS follow up reminder for a patient visit
+ * (Wired to Gemini Agent 3 in Phase 3)
+ */
+const triggerFollowUp = async (req, res) => {
+  try {
+    const { visitId } = req.params;
+    const { language = 'hi', follow_up_days = 3 } = req.body;
+
+    if (!isConfigured) {
+      const reminder = await generateFollowUpReminder({
+        patient_name: 'Ramesh Kumar',
+        diagnosis: 'Viral Pharyngitis',
+        medicines: 'Paracetamol 650mg TDS, Azithromycin 500mg OD',
+        follow_up_days,
+        language
+      });
+      return res.status(200).json({ success: true, data: reminder });
+    }
+
+    const { data: visit, error } = await supabase
+      .from('visits')
+      .select('*, patients(name, phone), clinics(name)')
+      .eq('id', visitId)
+      .maybeSingle();
+
+    const patientName = visit?.patients?.name || 'Ramesh Kumar';
+    const clinicName = visit?.clinics?.name || 'Aarogya Seva Kendra';
+    const diagnosis = visit?.diagnosis || 'Clinical Consultation';
+    const medicines = visit?.prescription_raw || 'Prescribed medications';
+
+    const reminder = await generateFollowUpReminder({
+      patient_name: patientName,
+      clinic_name: clinicName,
+      diagnosis,
+      medicines,
+      follow_up_days,
+      language
+    });
+
+    return res.status(200).json({ success: true, data: reminder });
+  } catch (err) {
+    console.error('triggerFollowUp error:', err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+};
+
 module.exports = {
   searchRecords,
-  getPatientFullHistory
+  getPatientFullHistory,
+  triggerFollowUp
 };

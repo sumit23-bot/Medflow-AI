@@ -10,5 +10,6 @@ router.use(roleCheck(['staff', 'doctor', 'pharmacist', 'admin']));
 
 router.get('/search', recordsController.searchRecords);
 router.get('/:patientId', recordsController.getPatientFullHistory);
+router.post('/follow-up/:visitId', recordsController.triggerFollowUp);
 
 module.exports = router;
