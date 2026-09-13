@@ -1,4 +1,4 @@
-const { supabase } = require('../supabaseClient');
+const { supabase, isConfigured } = require('../supabaseClient');
 
 /**
  * POST /api/leads
@@ -16,8 +16,6 @@ const createLead = async (req, res) => {
     if (!contact && !name) {
       return res.status(400).json({ success: false, error: 'At least name or contact is required' });
     }
-
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!isConfigured) {
       return res.status(201).json({

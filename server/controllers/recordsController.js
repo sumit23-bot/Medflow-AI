@@ -1,4 +1,4 @@
-const { supabase } = require('../supabaseClient');
+const { supabase, isConfigured } = require('../supabaseClient');
 
 /**
  * GET /api/records/search?q=...
@@ -8,7 +8,6 @@ const searchRecords = async (req, res) => {
   try {
     const { q = '' } = req.query;
     const clinicId = req.user?.clinic_id || '11111111-1111-1111-1111-111111111111';
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!isConfigured) {
       // Mock patient search results
@@ -77,7 +76,6 @@ const getPatientFullHistory = async (req, res) => {
   try {
     const { patientId } = req.params;
     const clinicId = req.user?.clinic_id || '11111111-1111-1111-1111-111111111111';
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!isConfigured) {
       return res.status(200).json({

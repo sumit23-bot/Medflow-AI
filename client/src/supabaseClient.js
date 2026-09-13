@@ -1,11 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const supabasePublishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('⚠️ Supabase URL or Anon Key is missing. Check your client/.env.local file.');
+if (!supabaseUrl || !supabasePublishableKey) {
+  console.warn('⚠️ Supabase URL or Publishable Key is missing. Check your client/.env.local file.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = (supabaseUrl && supabasePublishableKey)
+  ? createClient(supabaseUrl, supabasePublishableKey)
+  : null;
+
 export default supabase;

@@ -233,17 +233,46 @@ async function runTests() {
       if (analyticsRes.status !== 200) throw new Error(`Analytics Status ${analyticsRes.status}`);
     });
 
-    // 17. Auth Endpoints
-    await test('POST /api/auth/login, /signup & GET /api/auth/me', async () => {
+    // 17. Auth Endpoints (Signup -> Login -> Me)
+    await test('POST /api/auth/signup, /login & GET /api/auth/me (Auth Lifecycle)', async () => {
+      const testEmail = `doctor_${Date.now()}@medflow.ai`;
+      const testPassword = 'TestPassword123!';
+
+      // 1. Signup fresh test user
+      const signupRes = await fetch(`${baseUrl}/api/auth/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: testEmail,
+          password: testPassword,
+          clinic_name: 'Test Aarogya Clinic',
+          name: 'Dr. Test Sharma',
+          role: 'doctor'
+        })
+      });
+      if (signupRes.status !== 201) {
+        const errData = await signupRes.json();
+        throw new Error(`Signup Status ${signupRes.status}: ${JSON.stringify(errData)}`);
+      }
+
+      // 2. Login with created credentials
       const loginRes = await fetch(`${baseUrl}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'doctor@medflow.ai', password: 'password123' })
+        body: JSON.stringify({ email: testEmail, password: testPassword })
       });
-      if (loginRes.status !== 200) throw new Error(`Login Status ${loginRes.status}`);
+      if (loginRes.status !== 200) {
+        const errData = await loginRes.json();
+        throw new Error(`Login Status ${loginRes.status}: ${JSON.stringify(errData)}`);
+      }
+      const loginData = await loginRes.json();
+      if (!loginData.success) throw new Error('Expected login success: true');
 
+      // 3. Verify /me with auth token or dev header
       const meRes = await fetch(`${baseUrl}/api/auth/me`, {
-        headers: { 'x-dev-role': 'doctor', 'x-dev-name': 'Dr. Rajesh Sharma' }
+        headers: loginData.token 
+          ? { 'Authorization': `Bearer ${loginData.token}` } 
+          : { 'x-dev-role': 'doctor', 'x-dev-name': 'Dr. Test Sharma' }
       });
       if (meRes.status !== 200) throw new Error(`Me Status ${meRes.status}`);
     });

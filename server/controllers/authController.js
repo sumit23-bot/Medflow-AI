@@ -1,4 +1,4 @@
-const { supabase } = require('../supabaseClient');
+const { supabase, isConfigured } = require('../supabaseClient');
 
 /**
  * POST /api/auth/login
@@ -11,8 +11,6 @@ const login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ success: false, error: 'Email and password are required' });
     }
-
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!isConfigured) {
       // Return demo doctor session
@@ -78,8 +76,6 @@ const signup = async (req, res) => {
       });
     }
 
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
-
     if (!isConfigured) {
       return res.status(201).json({
         success: true,
@@ -95,14 +91,27 @@ const signup = async (req, res) => {
       });
     }
 
-    // 1. Sign up in Supabase auth
-    const { data: authData, error: authErr } = await supabase.auth.signUp({
-      email,
-      password
-    });
-
-    if (authErr) {
-      return res.status(400).json({ success: false, error: authErr.message });
+    // 1. Create user in Supabase auth (using admin API with email_confirm: true)
+    let authUser;
+    if (supabase.auth.admin) {
+      const { data: adminData, error: adminErr } = await supabase.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true
+      });
+      if (adminErr) {
+        return res.status(400).json({ success: false, error: adminErr.message });
+      }
+      authUser = adminData.user;
+    } else {
+      const { data: authData, error: authErr } = await supabase.auth.signUp({
+        email,
+        password
+      });
+      if (authErr) {
+        return res.status(400).json({ success: false, error: authErr.message });
+      }
+      authUser = authData.user;
     }
 
     // 2. Create clinic
@@ -121,7 +130,7 @@ const signup = async (req, res) => {
         clinic_id: clinic.id,
         role,
         name,
-        auth_id: authData.user.id
+        auth_id: authUser.id
       }])
       .select()
       .single();
@@ -134,7 +143,7 @@ const signup = async (req, res) => {
       user: {
         id: userProfile.id,
         name: userProfile.name,
-        email: authData.user.email,
+        email: authUser.email,
         role: userProfile.role,
         clinic_id: clinic.id,
         clinic_name: clinic.name

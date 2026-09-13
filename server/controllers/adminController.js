@@ -1,4 +1,4 @@
-const { supabase } = require('../supabaseClient');
+const { supabase, isConfigured } = require('../supabaseClient');
 
 /**
  * GET /api/admin/stats
@@ -7,7 +7,6 @@ const { supabase } = require('../supabaseClient');
 const getAdminStats = async (req, res) => {
   try {
     const clinicId = req.user?.clinic_id || '11111111-1111-1111-1111-111111111111';
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!isConfigured) {
       return res.status(200).json({
@@ -69,7 +68,6 @@ const getAdminStats = async (req, res) => {
 const getStaffList = async (req, res) => {
   try {
     const clinicId = req.user?.clinic_id || '11111111-1111-1111-1111-111111111111';
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!isConfigured) {
       return res.status(200).json({
@@ -123,7 +121,6 @@ const addStaffMember = async (req, res) => {
   try {
     const clinicId = req.user?.clinic_id || '11111111-1111-1111-1111-111111111111';
     const { name, role, contact, auth_id } = req.body;
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!name || !role) {
       return res.status(400).json({ success: false, error: 'Name and role are required' });

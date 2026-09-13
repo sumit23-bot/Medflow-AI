@@ -1,4 +1,4 @@
-const { supabase } = require('../supabaseClient');
+const { supabase, isConfigured } = require('../supabaseClient');
 
 /**
  * POST /api/kiosk/symptom
@@ -47,9 +47,6 @@ const issueToken = async (req, res) => {
     const patientName = patient.name || 'Walk-in Patient';
     const patientPhone = patient.phone || null;
     const patientAge = patient.age ? parseInt(patient.age, 10) : null;
-
-    // Check if Supabase client is connected
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!isConfigured) {
       // Return realistic mock response for testing before DB credentials

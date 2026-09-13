@@ -1,4 +1,4 @@
-const { supabase } = require('../supabaseClient');
+const { supabase, isConfigured } = require('../supabaseClient');
 
 /**
  * GET /api/super-admin/clinics
@@ -6,8 +6,6 @@ const { supabase } = require('../supabaseClient');
  */
 const getAllClinics = async (req, res) => {
   try {
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
-
     if (!isConfigured) {
       return res.status(200).json({
         success: true,
@@ -54,8 +52,6 @@ const getAllClinics = async (req, res) => {
  */
 const getPlatformAnalytics = async (req, res) => {
   try {
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
-
     if (!isConfigured) {
       return res.status(200).json({
         success: true,

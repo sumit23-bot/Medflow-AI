@@ -1,4 +1,4 @@
-const { supabase } = require('../supabaseClient');
+const { supabase, isConfigured } = require('../supabaseClient');
 
 /**
  * GET /api/doctor/queue
@@ -7,7 +7,6 @@ const { supabase } = require('../supabaseClient');
 const getDoctorQueue = async (req, res) => {
   try {
     const clinicId = req.user?.clinic_id || '11111111-1111-1111-1111-111111111111';
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!isConfigured) {
       // Return dummy queue data for testing
@@ -85,7 +84,6 @@ const getPatientDetail = async (req, res) => {
   try {
     const { id: patientId } = req.params;
     const clinicId = req.user?.clinic_id || '11111111-1111-1111-1111-111111111111';
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!isConfigured) {
       // Dummy patient profile + history
@@ -161,7 +159,6 @@ const submitPrescription = async (req, res) => {
   try {
     const { visit_id, diagnosis, prescription_raw, prescription_structured_ai } = req.body;
     const doctorId = req.user?.id || null;
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!visit_id) {
       return res.status(400).json({ success: false, error: 'visit_id is required' });

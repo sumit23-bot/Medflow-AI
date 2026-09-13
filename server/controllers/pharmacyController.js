@@ -1,4 +1,4 @@
-const { supabase } = require('../supabaseClient');
+const { supabase, isConfigured } = require('../supabaseClient');
 
 /**
  * GET /api/pharmacy/queue
@@ -7,7 +7,6 @@ const { supabase } = require('../supabaseClient');
 const getPharmacyQueue = async (req, res) => {
   try {
     const clinicId = req.user?.clinic_id || '11111111-1111-1111-1111-111111111111';
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!isConfigured) {
       return res.status(200).json({
@@ -68,7 +67,6 @@ const getPharmacyQueue = async (req, res) => {
 const dispenseMedicine = async (req, res) => {
   try {
     const { visitId } = req.params;
-    const isConfigured = Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY));
 
     if (!visitId) {
       return res.status(400).json({ success: false, error: 'visitId param is required' });
