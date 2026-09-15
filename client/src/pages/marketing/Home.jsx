@@ -309,37 +309,37 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-1">
               <div className="text-3xl md:text-4xl font-serif font-bold text-ink-950">
-                $5.7B+
+                $14.5–19B
               </div>
               <div className="text-xs uppercase font-mono tracking-wider text-gray-500 font-semibold">
-                Digital Health Sector Growth
+                Digital Health Market Size
               </div>
               <p className="text-xs text-gray-600 font-sans leading-relaxed">
-                Projected transition of Indian digital healthcare delivery infrastructure toward digitized primary facilities by 2027.
+                National healthcare transition illustrating the rapid expansion and capital allocation toward digitized primary facilities in India.
               </p>
             </div>
 
             <div className="space-y-1">
               <div className="text-3xl md:text-4xl font-serif font-bold text-ink-950">
-                100M+
+                270M+
               </div>
               <div className="text-xs uppercase font-mono tracking-wider text-gray-500 font-semibold">
-                National Teleconsultation Proof
+                eSanjeevani Teleconsultations
               </div>
               <p className="text-xs text-gray-600 font-sans leading-relaxed">
-                Recorded teleconsultations through government initiatives like eSanjeevani, demonstrating scalable public readiness for digital care.
+                Documented teleconsultations across India's public primary healthcare network, validating ground-level readiness for digital clinical workflows.
               </p>
             </div>
 
             <div className="space-y-1">
               <div className="text-3xl md:text-4xl font-serif font-bold text-ink-950">
-                ~38%
+                ~20%
               </div>
               <div className="text-xs uppercase font-mono tracking-wider text-gray-500 font-semibold">
                 Rural Digital Literacy
               </div>
               <p className="text-xs text-gray-600 font-sans leading-relaxed">
-                Rural demographic context establishing why shared voice-first physical kiosk interfaces succeed where personal smartphone apps stall.
+                Rural demographic literacy rate establishing why shared voice-first physical kiosk interfaces succeed where personal smartphone apps stall.
               </p>
             </div>
           </div>

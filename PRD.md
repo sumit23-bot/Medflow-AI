@@ -8,6 +8,11 @@
 ## 1. Executive Summary
 MedFlow AI is an AI-powered, voice-first platform that digitizes the walk-in patient flow at free/low-cost clinics — replacing paper registers, reducing doctor consult time spent on note-taking, and synchronizing the medicine counter with live prescriptions. It is built to be affordable across the full economic spectrum: usable and beneficial whether the clinic serves daily-wage laborers or is run as a private business by a doctor/businessman.
 
+### 1.4 Illustrative Market Context & Benchmark Statistics
+- **Digital Health Market Size:** $14.5–19 Billion market transition in India, illustrating the rapid shift toward digitized healthcare infrastructure.
+- **eSanjeevani Teleconsultation Count:** 270M+ teleconsultations completed across India's public primary care network, proving citizen willingness and readiness to adopt digital clinical workflows.
+- **Digital Literacy Percentage:** ~20% rural digital literacy rate, demonstrating why smartphone-only telehealth apps fail in rural clinics and why voice-first physical kiosk interfaces are essential.
+
 ---
 
 ## 2. Problem Statement
