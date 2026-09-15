@@ -73,23 +73,23 @@ export default function About() {
 
         <div className="prose font-sans text-gray-800 space-y-6 leading-relaxed text-base sm:text-lg">
           <p>
-            <strong>We built MedFlow AI after standing inside a crowded government dispensary on a hot Tuesday morning.</strong>
+            <strong>We built MedFlow AI after observing the ground reality inside an overcrowded public dispensary.</strong>
           </p>
 
           <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-            Long before the doctor arrived at 8:30 AM, more than eighty patients had already formed an anxious line snaking out of the veranda into the dusty courtyard. Many were daily-wage laborers who had surrendered half a day's earnings just to be there. Others were elderly patients with chronic respiratory struggles and mothers carrying infants with high fevers.
+            In the early morning, long before clinic doors opened, dozens of walk-in patients had already formed an anxious line snaking out of the veranda into the courtyard. Many were daily-wage laborers who had surrendered half a day's earnings just to be there. Others were elderly patients with chronic respiratory struggles and mothers carrying infants with high fevers.
           </p>
 
           <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-            At the single registration desk, the bottleneck was immediate. A lone receptionist was frantically scribbling names, ages, and symptoms into thick, water-stained paper registers. In the humidity, pages tore easily; over seasons of monsoon rains and morning overcrowding, entire volumes of patient histories had simply vanished. A patient returning after three months had zero record of their prior blood pressure readings or drug reactions.
+            At the single registration desk, the bottleneck was immediate. A lone receptionist was frantically scribbling names, ages, and symptoms into thick, water-stained paper registers. In the humidity, pages tore easily; over seasons of monsoon rains and morning overcrowding, entire volumes of patient histories had simply vanished. A patient returning after months had zero record of their prior blood pressure readings or drug reactions.
           </p>
 
           <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-            Inside the doctor's consultation chamber, the pressure was unrelenting. With eighty people waiting outside, the physician had only five to ten minutes per consultation. Yet more than half of that precious window was swallowed by verbal repetition: asking the patient to recount their complaints from scratch, clarifying timelines, and handwriting paper prescription chits. The doctor was forced to spend valuable cognitive energy acting as a clerical note-taker rather than conducting thorough physical examinations.
+            Inside the doctor's consultation chamber, the pressure was unrelenting. With a long line of patients waiting outside, the physician had only 5–10 minutes per consultation. Yet more than half of that precious window was swallowed by verbal repetition: asking the patient to recount their complaints from scratch, clarifying timelines, and handwriting paper prescription chits. The doctor was forced to spend valuable cognitive energy acting as a clerical note-taker rather than conducting thorough physical examinations.
           </p>
 
           <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-            And when the consult finally ended, the patient's ordeal was only half over. They were handed a handwritten paper slip and directed to join a second, equally long queue outside the pharmacy counter—waiting another thirty minutes while the pharmacist manually deciphered handwriting and checked inventory stock.
+            And when the consult finally ended, the patient's ordeal was only half over. They were handed a handwritten paper slip and directed to join a second, equally long queue outside the pharmacy counter—waiting in yet another congested line while the pharmacist manually deciphered handwriting and checked medicine stock.
           </p>
 
           <div className="p-6 bg-gray-50 border-l-4 border-l-ink-900 border-y border-r border-gray-200 rounded-r font-serif text-base text-ink-950 italic">

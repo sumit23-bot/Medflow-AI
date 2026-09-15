@@ -22,14 +22,14 @@ export const BLOG_POSTS = [
       {
         heading: 'The Ground Reality of Primary Care',
         paragraphs: [
-          'In early 2026, our team spent time observing walk-in operations across rural dispensaries and free government clinics. The immediate reality is staggering: at 7:30 AM, hours before the doors open, dozens of patients—many of them daily-wage earners or elderly farmers—stand in winding token queues under whatever shade they can find.',
+          'In early 2026, our team spent time observing walk-in operations across rural dispensaries and free government clinics. The immediate reality is staggering: early in the morning, hours before doors open, dozens of patients—many of them daily-wage earners or elderly farmers—stand in winding token queues under whatever shade they can find.',
           'When the clinic opens, the chaos accelerates. A single desk clerk hurriedly records names in thick, tattered paper registers. In the monsoon season or during crowded mornings, these physical books get damaged, torn, or lost. For returning patients with chronic illnesses like hypertension or diabetes, longitudinal history essentially disappears.'
         ]
       },
       {
         heading: 'The 5-to-10 Minute Consultation Dilemma',
         paragraphs: [
-          'Inside the consultation room, doctors face an insurmountable workload. With 80 to 120 patients waiting outside, a physician has between five and ten minutes per consult. Tragic amounts of that precious time are consumed asking the same introductory questions: "What is your main problem? How many days? Did you take any tablet?"',
+          'Inside the consultation room, doctors face an insurmountable workload. With a continuous line of walk-in patients waiting outside, a physician has between five and ten minutes per consult. Tragic amounts of that precious time are consumed asking the same introductory questions: "What is your main problem? How many days? Did you take any tablet?"',
           'Instead of physical examinations and empathetic clinical care, the doctor acts as a manual scribe, scribbling hurried notes and handwritten prescription slips.'
         ]
       },
